@@ -1,0 +1,42 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <label for="first-name">First Name: </label>
+    <input id="first-name" type="text" formControlName="firstName" required>
+
+    <label for="last-name">Last Name: </label>
+    <input id="last-name" type="text" formControlName="lastName">
+
+    <div formGroupName="address">
+        <h2>Address</h2>
+
+        <label for="Village">Village: </label>
+        <input id="Village" type="text" formControlName="Village">
+
+        <label for="Gewog">Gewog: </label>
+        <input id="Gewog" type="text" formControlName="Gewog">
+
+        <label for="Dzongkhag">Dzongkhag: </label>
+        <input id="Dzongkhag" type="text" formControlName="Dzongkhag">
+    </div>
+
+    <div formArrayName="NickName">
+        <h2>NickName</h2>
+        <button type="button" (click)="addNickName()">+ Add NickName</button>
+
+        <div *ngFor="let NickName of NickName.controls; let i=index">
+            <label for="NickName-{{ i }}">NickName:</label>
+            <input id="NickName-{{ i }}" type="text" [formControlName]="i">
+        </div>
+    </div>
+
+
+    <p>Complete the form to enable button.</p>
+    <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+</form>
+
+<hr>
+
+<p>Form Value: {{ profileForm.value | json }}</p>
+
+<p>Form Status: {{ profileForm.status }}</p>
+
+<button type="button" (click)="updateProfile()">Update Profile</button>
